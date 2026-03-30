@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>For You ❤️</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: linear-gradient(135deg, #ffe6f0, #ffd6e0);
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    #container {
+      max-width: 500px;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #ff4d6d;
+    }
+
+    #text {
+      font-size: 22px;
+      margin-top: 30px;
+      min-height: 80px;
+      transition: opacity 0.5s;
+    }
+
+    button {
+      margin-top: 30px;
+      padding: 12px 25px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      background: #ff4d6d;
+      color: white;
+      cursor: pointer;
+    }
+
+    #photo {
+      display: none;
+      margin-top: 20px;
+      max-width: 100%;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      opacity: 0;
+    }
+
+    .heart {
+      position: absolute;
+      color: #ff4d6d;
+      animation: float 6s linear infinite;
+      font-size: 18px;
+    }
+
+    @keyframes float {
+      from { transform: translateY(100vh); opacity: 1; }
+      to { transform: translateY(-10vh); opacity: 0; }
+    }
+  </style>
+</head>
+
+<body>
+
+<div id="container">
+  <h1>Hey Shuttuuusee ❤️</h1>
+  <div id="text">I made this for you…</div>
+  <button onclick="start()">Tap slowly 😌</button>
+
+  <img id="photo" src="photo.jpg">
+</div>
+
+<!-- MUSIC -->
+<audio id="bgMusic" src="music.mp3" loop></audio>
+
+<script>
+const lines = [
+  "I know you said you're okay…",
+  "But sometimes 'okay' hides a lot.",
+  "And you don’t always have to explain it.",
+  "You don’t always have to be strong either.",
+  "It’s okay to feel off.",
+  "It’s okay to slow down.",
+  "It’s okay to just exist for a moment.",
+  "But don’t forget this…",
+  "You’ve handled so much already.",
+  "And you’re still here… still going.",
+  "That says a lot about you.",
+  "You’re stronger than you feel right now.",
+  "And softer than you allow yourself to be.",
+  "And both of those are beautiful.",
+  "You don’t have to carry everything alone.",
+  "I’m here… not just when you're happy.",
+  "But especially when you're not.",
+  "So take a breath…",
+  "And give yourself a little credit today 🙂"
+];
+
+let index = 0;
+
+function start() {
+  const music = document.getElementById("bgMusic");
+  music.volume = 0.6;
+  music.play();
+
+  document.querySelector("button").style.display = "none";
+
+  showNext();
+}
+
+function showNext() {
+  const text = document.getElementById("text");
+  const photo = document.getElementById("photo");
+
+  if (index < lines.length) {
+    text.style.opacity = 0;
+
+    setTimeout(() => {
+      text.innerText = lines[index];
+      text.style.opacity = 1;
+
+      const delay = 2200 + (lines[index].length * 40);
+
+      index++;
+      setTimeout(showNext, delay);
+    }, 400);
+
+  } else {
+    // FINAL MOMENT
+    text.style.opacity = 0;
+
+    setTimeout(() => {
+      text.innerText = "And this… is my favorite place ❤️";
+      text.style.opacity = 1;
+
+      setTimeout(() => {
+        photo.style.display = "block";
+
+        setTimeout(() => {
+          photo.style.transition = "opacity 2s";
+          photo.style.opacity = 1;
+        }, 100);
+
+      }, 1500);
+
+    }, 600);
+  }
+}
+
+// floating hearts
+setInterval(() => {
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.innerText = "❤️";
+  heart.style.left = Math.random() * 100 + "vw";
+  document.body.appendChild(heart);
+  setTimeout(() => heart.remove(), 6000);
+}, 800);
+</script>
+
+</body>
+</html>
